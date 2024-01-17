@@ -76,8 +76,21 @@ namespace UnityExplorer.UI.Panels
                     currentUserCameraRotation = currentMain.transform.rotation;
                 }
             }
+            else if (StartOfRound.Instance && StartOfRound.Instance.activeCamera)
+            {
+                originalCameraPosition = StartOfRound.Instance.activeCamera.transform.position;
+                originalCameraRotation = StartOfRound.Instance.activeCamera.transform.rotation;
+
+                if (currentUserCameraPosition == null)
+                {
+                    currentUserCameraPosition = StartOfRound.Instance.activeCamera.transform.position;
+                    currentUserCameraRotation = StartOfRound.Instance.activeCamera.transform.rotation;
+                }
+            }
             else
+            {
                 originalCameraRotation = Quaternion.identity;
+            }
         }
 
         static void SetupFreeCamera()

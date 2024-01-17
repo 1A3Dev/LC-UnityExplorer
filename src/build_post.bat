@@ -1,0 +1,3 @@
+cd C:\Users\Jenson\source\repos\UnityExplorer
+copy ".\Release\UnityExplorer.BepInEx5.Mono\UnityExplorer.BIE5.Mono.dll" "C:\Users\Jenson\AppData\Roaming\r2modmanPlus-local\LethalCompany\profiles\Default\BepInEx\plugins\sinai-dev-UnityExplorer\UnityExplorer.BIE5.Mono.dll" /Y
+copy ".\Release\UnityExplorer.BepInEx5.Mono\UnityExplorer.BIE5.Mono.pdb" "C:\Users\Jenson\AppData\Roaming\r2modmanPlus-local\LethalCompany\profiles\Default\BepInEx\plugins\sinai-dev-UnityExplorer\UnityExplorer.BIE5.Mono.pdb" /Y
