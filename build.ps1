@@ -1,3 +1,8 @@
+cd UniverseLib
+.\build.ps1
+cd ..
+
+
 # ----------- BepInEx 5 Mono -----------
 dotnet build src/UnityExplorer.sln -c Release_BIE5_Mono
 $Path = "Release/UnityExplorer.BepInEx5.Mono"
