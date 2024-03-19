@@ -7,7 +7,7 @@ namespace UnityExplorer.Hooks
 {
     public class HookInstance
     {
-        // Static 
+        // Static
 
         static readonly StringBuilder evaluatorOutput;
         static readonly ScriptEvaluator scriptEvaluator = new(new StringWriter(evaluatorOutput = new StringBuilder()));
@@ -28,7 +28,7 @@ namespace UnityExplorer.Hooks
         public MethodInfo TargetMethod;
         public string PatchSourceCode;
 
-        readonly string signature;
+        internal readonly string signature;
         PatchProcessor patchProcessor;
 
         MethodInfo postfix;
@@ -47,7 +47,7 @@ namespace UnityExplorer.Hooks
                 Patch();
         }
 
-        // Evaluator.source_file 
+        // Evaluator.source_file
         private static readonly FieldInfo fi_sourceFile = AccessTools.Field(typeof(Evaluator), "source_file");
         // TypeDefinition.Definition
         private static readonly PropertyInfo pi_Definition = AccessTools.Property(typeof(TypeDefinition), "Definition");
@@ -217,13 +217,20 @@ namespace UnityExplorer.Hooks
                 Unpatch();
         }
 
-        public void Patch()
+        public void Patch(bool force = false)
         {
             try
             {
+                if (LethalPatches.forceDisabled && !force)
+                {
+                    ExplorerCore.Log($"Re-enabling hook failed since you are not host: {signature}");
+                    return;
+                }
+
                 patchProcessor.Patch();
 
-                Enabled = true;
+                if (!force)
+                    Enabled = true;
             }
             catch (Exception ex)
             {
@@ -231,7 +238,7 @@ namespace UnityExplorer.Hooks
             }
         }
 
-        public void Unpatch()
+        public void Unpatch(bool skipBool = false)
         {
             try
             {
@@ -244,12 +251,70 @@ namespace UnityExplorer.Hooks
                 if (transpiler != null)
                     patchProcessor.Unpatch(transpiler);
 
-                Enabled = false;
+                if (!skipBool)
+                    Enabled = false;
             }
             catch (Exception ex)
             {
                 ExplorerCore.LogWarning($"Exception unpatching method: {ex}");
             }
+        }
+    }
+
+    [HarmonyPatch]
+    internal static class LethalPatches
+    {
+        internal static bool forceDisabled = false;
+
+        [HarmonyPatch(typeof(StartOfRound), "Start")]
+        [HarmonyPostfix]
+        private static void StartOfRoundStart(StartOfRound __instance)
+        {
+           foreach (HookInstance hook in HookList.currentHooks)
+           {
+               if (hook is null) continue;
+
+               if (hook.Enabled)
+               {
+                   if (__instance.IsHost)
+                   {
+                       if (forceDisabled)
+                       {
+                           hook.Patch(true);
+                           ExplorerCore.Log($"Re-enabled hook since you are host: {hook.signature}");
+                       }
+                   }
+                   else
+                   {
+                       if (!forceDisabled)
+                       {
+                           hook.Unpatch(true);
+                           ExplorerCore.Log($"Disabled hook since you aren't host: {hook.signature}");
+                       }
+                   }
+               }
+           }
+           forceDisabled = !__instance.IsHost;
+        }
+
+        [HarmonyPatch(typeof(StartOfRound), "OnDestroy")]
+        [HarmonyPostfix]
+        private static void StartOfRoundDestroy()
+        {
+           if (forceDisabled)
+           {
+               forceDisabled = false;
+               foreach (HookInstance hook in HookList.currentHooks)
+               {
+                   if (hook is null) continue;
+
+                   if (hook.Enabled)
+                   {
+                       hook.Patch(true);
+                       ExplorerCore.Log($"Re-enabled hook since you disconnected: {hook.signature}");
+                   }
+               }
+           }
         }
     }
 }

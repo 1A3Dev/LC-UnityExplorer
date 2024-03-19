@@ -51,6 +51,12 @@ namespace UnityExplorer.UI.Panels
 
         internal static void BeginFreecam()
         {
+            if (StartOfRound.Instance != null && !StartOfRound.Instance.IsHost)
+            {
+               ExplorerCore.LogWarning("Only the host can use freecam!");
+               return;
+            }
+
             inFreeCamMode = true;
 
             previousMousePosition = InputManager.MousePosition;

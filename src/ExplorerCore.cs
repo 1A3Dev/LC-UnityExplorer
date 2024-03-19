@@ -55,6 +55,8 @@ namespace UnityExplorer
             UERuntimeHelper.Init();
             ExplorerBehaviour.Setup();
             UnityCrashPrevention.Init();
+
+            Harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
 
         // Do a delayed setup so that objects aren't destroyed instantly.

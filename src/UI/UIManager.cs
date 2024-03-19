@@ -131,7 +131,7 @@ namespace UnityExplorer.UI
                 UniverseLib.Config.ConfigManager.Force_Unlock_Mouse = !UniverseLib.Config.ConfigManager.Force_Unlock_Mouse;
 
             // update the timescale value
-            timeScaleWidget.Update();
+            timeScaleWidget?.Update();
 
             // check screen dimension change
             Display display = DisplayManager.ActiveDisplay;
@@ -242,7 +242,7 @@ namespace UnityExplorer.UI
             UIFactory.SetLayoutGroup<HorizontalLayoutGroup>(NavbarTabButtonHolder, false, true, true, true, 4, 2, 2, 2, 2);
 
             // Time scale widget
-            timeScaleWidget = new(navbarPanel);
+            //timeScaleWidget = new(navbarPanel);
 
             //spacer
             GameObject spacer = UIFactory.CreateUIObject("Spacer", navbarPanel);

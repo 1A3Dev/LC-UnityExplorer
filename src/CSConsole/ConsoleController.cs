@@ -254,6 +254,12 @@ namespace UnityExplorer.CSConsole
                 && InputManager.GetKeyDown(KeyCode.R)
                 && timeOfLastCtrlR.OccuredEarlierThanDefault())
             {
+                if (StartOfRound.Instance != null && !StartOfRound.Instance.IsHost)
+                {
+                   ExplorerCore.LogWarning("Only the host can compile scripts!");
+                   return;
+                }
+
                 timeOfLastCtrlR = Time.realtimeSinceStartup;
                 Evaluate(Panel.Input.Text);
             }
@@ -432,7 +438,7 @@ namespace UnityExplorer.CSConsole
                 // depending on which one we are not at.
                 if (LastCaretPosition == indentedStart)
                     SetCaretPosition(thisline.startCharIdx);
-                else 
+                else
                     SetCaretPosition(indentedStart);
             }
             else

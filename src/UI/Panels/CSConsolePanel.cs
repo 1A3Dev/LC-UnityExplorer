@@ -73,7 +73,15 @@ namespace UnityExplorer.UI.Panels
             ButtonRef compileButton = UIFactory.CreateButton(toolsRow, "CompileButton", "Compile", new Color(0.33f, 0.5f, 0.33f));
             UIFactory.SetLayoutElement(compileButton.Component.gameObject, minHeight: 28, minWidth: 130, flexibleHeight: 0);
             compileButton.ButtonText.fontSize = 15;
-            compileButton.OnClick += () => { OnCompileClicked?.Invoke(); };
+            compileButton.OnClick += () => {
+                if (StartOfRound.Instance != null && !StartOfRound.Instance.IsHost)
+                {
+                   ExplorerCore.LogWarning("Only the host can compile scripts!");
+                   return;
+                }
+
+                OnCompileClicked?.Invoke();
+            };
 
             ButtonRef resetButton = UIFactory.CreateButton(toolsRow, "ResetButton", "Reset", new Color(0.33f, 0.33f, 0.33f));
             UIFactory.SetLayoutElement(resetButton.Component.gameObject, minHeight: 28, minWidth: 80, flexibleHeight: 0);
