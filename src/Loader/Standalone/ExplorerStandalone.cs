@@ -8,9 +8,6 @@ using UnityExplorer.Config;
 using UnityEngine.EventSystems;
 using UniverseLib.Input;
 using UnityExplorer.Loader.Standalone;
-#if CPP
-using UnhollowerRuntimeLib;
-#endif
 
 namespace UnityExplorer
 {
@@ -39,7 +36,7 @@ namespace UnityExplorer
             }
         }
         protected static string explorerFolderDest;
-        
+
         Action<object> IExplorerLoader.OnLogMessage => (object log) => { OnLog?.Invoke(log?.ToString() ?? "", LogType.Log); };
         Action<object> IExplorerLoader.OnLogWarning => (object log) => { OnLog?.Invoke(log?.ToString() ?? "", LogType.Warning); };
         Action<object> IExplorerLoader.OnLogError   => (object log) => { OnLog?.Invoke(log?.ToString() ?? "", LogType.Error); };
@@ -97,7 +94,13 @@ namespace UnityExplorer
         {
             if (explorerFolderDest == null)
             {
-                string assemblyLocation = Uri.UnescapeDataString(new Uri(typeof(ExplorerCore).Assembly.CodeBase).AbsolutePath);
+                string location =
+#if NET6_0
+                    typeof(ExplorerCore).Assembly.Location;
+#else
+                    typeof(ExplorerCore).Assembly.CodeBase;
+#endif
+                string assemblyLocation = Uri.UnescapeDataString(new Uri(location).AbsolutePath);
                 explorerFolderDest = Path.GetDirectoryName(assemblyLocation);
             }
         }

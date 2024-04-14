@@ -21,7 +21,7 @@
     <ItemGroup Condition="'$(Configuration)'=='ML_Cpp_net6' or '$(Configuration)'=='ML_Cpp_net472' or '$(Configuration)'=='STANDALONE_Cpp' or '$(Configuration)'=='BIE_Cpp'">
       <Exec Command="dotnet build ..\UniverseLib\src\UniverseLib.sln -c Release_IL2CPP_Unhollower" />
     </ItemGroup>
-    <ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR'">
+    <ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR' or '$(Configuration)'=='STANDALONE_Cpp_CoreCLR'">
       <Exec Command="dotnet build ..\UniverseLib\src\UniverseLib.sln -c Release_IL2CPP_Interop_BIE" />
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)'=='ML_Cpp_CoreCLR'">
@@ -121,6 +121,14 @@
     <DefineConstants>CPP,STANDALONE,UNHOLLOWER</DefineConstants>
     <AssemblyName>UnityExplorer.STANDALONE.IL2CPP</AssemblyName>
   </PropertyGroup>
+  <!-- STANDALONE Il2Cpp CoreCLR-->
+  <PropertyGroup Condition="'$(Configuration)'=='STANDALONE_Cpp_CoreCLR'">
+    <TargetFramework>net6</TargetFramework>
+    <OutputPath>..\Release\UnityExplorer.Standalone.IL2CPP.CoreCLR\</OutputPath>
+    <DefineConstants>CPP,STANDALONE,INTEROP</DefineConstants>
+    <AssemblyName>UnityExplorer.STANDALONE.IL2CPP.CoreCLR</AssemblyName>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='BIE5_Mono|AnyCPU'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
@@ -149,13 +157,13 @@
   </ItemGroup>
 
   <!-- il2cpp Interop nuget -->
-  <ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR' or '$(Configuration)'=='ML_Cpp_CoreCLR'">
+  <ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR' or '$(Configuration)'=='ML_Cpp_CoreCLR' or '$(Configuration)'=='STANDALONE_Cpp_CoreCLR'">
     <PackageReference Include="Il2CppInterop.Common" Version="1.0.0" />
     <PackageReference Include="Il2CppInterop.Runtime" Version="1.0.0" />
   </ItemGroup>
 
   <!-- BIE il2cpp Interop -->
-  <ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR'">
+  <ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR' or '$(Configuration)'=='STANDALONE_Cpp_CoreCLR'">
     <Reference Include="UniverseLib">
       <HintPath>..\UniverseLib\Release\UniverseLib.Il2Cpp.Interop\UniverseLib.BIE.IL2CPP.Interop.dll</HintPath>
       <Private>True</Private>
@@ -308,7 +316,7 @@
     </Reference>
   </ItemGroup>
   <!-- Il2Cpp Interop -->
-  <ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR' or '$(Configuration)'=='ML_Cpp_CoreCLR'">
+  <ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR' or '$(Configuration)'=='ML_Cpp_CoreCLR' or '$(Configuration)'=='STANDALONE_Cpp_CoreCLR'">
     <Reference Include="Il2Cppmscorlib">
       <HintPath>..\lib\interop\Il2Cppmscorlib.dll</HintPath>
       <Private>False</Private>
