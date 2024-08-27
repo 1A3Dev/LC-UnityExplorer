@@ -15,8 +15,8 @@
 # Features
 
 <p align="center">
-  <a href="https://raw.githubusercontent.com/1A3Dev/LC-UnityExplorer/master/img/preview.png">
-    <img src="img/preview.png" />
+  <a href="https://raw.githubusercontent.com/1A3Dev/LC-UnityExplorer/lethal-company/img/preview.png">
+    <img src="https://raw.githubusercontent.com/1A3Dev/LC-UnityExplorer/lethal-company/img/preview.png" />
   </a>
 </p>
 
