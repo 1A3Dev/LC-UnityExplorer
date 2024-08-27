@@ -1,20 +1,18 @@
 ﻿using GameNetcodeStuff;
 using HarmonyLib;
+using UnityEngine;
 
 namespace UnityExplorer.Inspectors.MouseInspectors
 {
     public class WorldInspector : MouseInspectorBase
     {
-        private static Camera MainCamera;
         private static GameObject lastHitObject;
 
         public override void OnBeginMouseInspect()
         {
-            MainCamera = Camera.main;
-
-            if (!StartOfRound.Instance || !StartOfRound.Instance.localPlayerController)
+            if (!StartOfRound.Instance || !StartOfRound.Instance.activeCamera)
             {
-                ExplorerCore.LogWarning("No MainCamera found! Cannot inspect world!");
+                ExplorerCore.LogWarning("No activeCamera found! Cannot inspect world!");
                 return;
             }
         }
@@ -29,17 +27,17 @@ namespace UnityExplorer.Inspectors.MouseInspectors
             InspectorManager.Inspect(lastHitObject);
         }
 
-        private static FieldInfo rawHit = AccessTools.Field(typeof(PlayerControllerB), "hit");
         public override void UpdateMouseInspect(Vector2 mousePos)
         {
-            if (!StartOfRound.Instance || !StartOfRound.Instance.localPlayerController)
+            if (!StartOfRound.Instance || !StartOfRound.Instance.activeCamera)
             {
                 ExplorerCore.LogWarning("No Main Camera was found, unable to inspect world!");
                 MouseInspector.Instance.StopInspect();
                 return;
             }
 
-            RaycastHit hit = (RaycastHit)rawHit.GetValue(StartOfRound.Instance.localPlayerController);
+            Ray ray = StartOfRound.Instance.activeCamera.ScreenPointToRay(mousePos);
+            Physics.Raycast(ray, out RaycastHit hit, 1000f, StartOfRound.Instance.collidersAndRoomMaskAndDefault, QueryTriggerInteraction.Ignore);
 
             if (hit.transform)
                 OnHitGameObject(hit.transform.gameObject);
