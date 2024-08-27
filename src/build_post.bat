@@ -1,2 +1,0 @@
-cd C:\Users\Jenson\source\repos\LC-UnityExplorer
-copy ".\Release\UnityExplorer.BepInEx5.Mono\UnityExplorer.BIE5.Mono.dll" "%appdata%\r2modmanPlus-local\LethalCompany\profiles\Default\BepInEx\plugins\LethalCompanyModding-Yukieji_UnityExplorer\sinai-dev\UnityExplorer.BIE5.Mono.dll" /Y

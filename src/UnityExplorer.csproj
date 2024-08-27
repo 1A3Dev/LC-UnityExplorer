@@ -98,8 +98,4 @@
   <ItemGroup Condition="$(CI) == 'true'">
       <PackageReference Include="LethalCompany.GameLibs.Steam" Version="62.0.1-ngd.0" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="call build_post.bat" />
-  </Target>
 </Project>

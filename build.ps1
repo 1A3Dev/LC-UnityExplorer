@@ -19,3 +19,5 @@ Move-Item -Path $Path/UniverseLib.Mono.dll -Destination $Path/plugins/sinai-dev-
 # (create zip archive)
 Remove-Item $Path/../UnityExplorer.BepInEx5.Mono.zip -ErrorAction SilentlyContinue
 compress-archive .\$Path\* $Path/../UnityExplorer.BepInEx5.Mono.zip
+
+Copy-Item $Path/plugins/sinai-dev-UnityExplorer/*.dll -Destination "$env:USERPROFILE\AppData\Roaming\r2modmanPlus-local\LethalCompany\profiles\Default\BepInEx\plugins\LethalCompanyModding-Yukieji_UnityExplorer\sinai-dev"

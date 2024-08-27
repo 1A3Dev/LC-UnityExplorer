@@ -26,9 +26,7 @@ namespace UnityExplorer.UI.Panels
         public override bool ShouldSaveActiveState => true;
 
         internal static bool inFreeCamMode;
-        internal static bool usingGameCamera;
         internal static Camera ourCamera;
-        internal static Camera lastMainCamera;
         internal static FreeCamBehaviour freeCamScript;
 
         internal static float desiredMoveSpeed = 10f;
@@ -53,8 +51,8 @@ namespace UnityExplorer.UI.Panels
         {
             if (StartOfRound.Instance != null && !StartOfRound.Instance.IsHost)
             {
-               ExplorerCore.LogWarning("Only the host can use freecam!");
-               return;
+                ExplorerCore.LogWarning("Only the host can use freecam!");
+                return;
             }
 
             inFreeCamMode = true;
@@ -69,20 +67,7 @@ namespace UnityExplorer.UI.Panels
 
         static void CacheMainCamera()
         {
-            Camera currentMain = Camera.main;
-            if (currentMain)
-            {
-                lastMainCamera = currentMain;
-                originalCameraPosition = currentMain.transform.position;
-                originalCameraRotation = currentMain.transform.rotation;
-
-                if (currentUserCameraPosition == null)
-                {
-                    currentUserCameraPosition = currentMain.transform.position;
-                    currentUserCameraRotation = currentMain.transform.rotation;
-                }
-            }
-            else if (StartOfRound.Instance && StartOfRound.Instance.activeCamera)
+            if (StartOfRound.Instance && StartOfRound.Instance.activeCamera)
             {
                 originalCameraPosition = StartOfRound.Instance.activeCamera.transform.position;
                 originalCameraRotation = StartOfRound.Instance.activeCamera.transform.rotation;
@@ -101,28 +86,6 @@ namespace UnityExplorer.UI.Panels
 
         static void SetupFreeCamera()
         {
-            if (useGameCameraToggle.isOn)
-            {
-                if (!lastMainCamera)
-                {
-                    ExplorerCore.LogWarning($"There is no previous Camera found, reverting to default Free Cam.");
-                    useGameCameraToggle.isOn = false;
-                }
-                else
-                {
-                    usingGameCamera = true;
-                    ourCamera = lastMainCamera;
-                }
-            }
-
-            if (!useGameCameraToggle.isOn)
-            {
-                usingGameCamera = false;
-
-                if (lastMainCamera)
-                    lastMainCamera.enabled = false;
-            }
-
             if (!ourCamera)
             {
                 ourCamera = new GameObject("UE_Freecam").AddComponent<Camera>();
@@ -145,17 +108,6 @@ namespace UnityExplorer.UI.Panels
         {
             inFreeCamMode = false;
 
-            if (usingGameCamera)
-            {
-                ourCamera = null;
-
-                if (lastMainCamera)
-                {
-                    lastMainCamera.transform.position = originalCameraPosition;
-                    lastMainCamera.transform.rotation = originalCameraRotation;
-                }
-            }
-
             if (ourCamera)
                 ourCamera.gameObject.SetActive(false);
             else
@@ -166,9 +118,6 @@ namespace UnityExplorer.UI.Panels
                 GameObject.Destroy(freeCamScript);
                 freeCamScript = null;
             }
-
-            if (lastMainCamera)
-                lastMainCamera.enabled = true;
         }
 
         static void SetCameraPosition(Vector3 pos)
@@ -200,14 +149,6 @@ namespace UnityExplorer.UI.Panels
             UIFactory.SetLayoutElement(startStopButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
             startStopButton.OnClick += StartStopButton_OnClick;
             SetToggleButtonState();
-
-            AddSpacer(5);
-
-            GameObject toggleObj = UIFactory.CreateToggle(ContentRoot, "UseGameCameraToggle", out useGameCameraToggle, out Text toggleText);
-            UIFactory.SetLayoutElement(toggleObj, minHeight: 25, flexibleWidth: 9999);
-            useGameCameraToggle.onValueChanged.AddListener(OnUseGameCameraToggled);
-            useGameCameraToggle.isOn = false;
-            toggleText.text = "Use Game Camera?";
 
             AddSpacer(5);
 
