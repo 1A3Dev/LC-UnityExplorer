@@ -198,7 +198,7 @@ namespace UnityExplorer.Hooks
                     codeBuilder.AppendLine(".AppendLine(__result?.ToString() ?? \"null\");");
             }
 
-            codeBuilder.AppendLine($"       UnityExplorer.ExplorerCore.Log(sb.ToString());");
+            codeBuilder.AppendLine($"       // UnityExplorer.ExplorerCore.Log(sb.ToString());");
             codeBuilder.AppendLine("    }");
             codeBuilder.AppendLine("    catch (System.Exception ex) {");
             codeBuilder.AppendLine($"        UnityExplorer.ExplorerCore.LogWarning($\"Exception in patch of {signature}:\\n{{ex}}\");");
@@ -280,8 +280,8 @@ namespace UnityExplorer.Hooks
                    {
                        if (forceDisabled)
                        {
-                           hook.Patch(true);
-                           ExplorerCore.Log($"Re-enabled hook since you are host: {hook.signature}");
+                            hook.Patch(true);
+                            ExplorerCore.Log($"Re-enabled hook since you are host: {hook.signature}");
                        }
                    }
                    else
@@ -310,8 +310,8 @@ namespace UnityExplorer.Hooks
 
                    if (hook.Enabled)
                    {
-                       hook.Patch(true);
-                       ExplorerCore.Log($"Re-enabled hook since you disconnected: {hook.signature}");
+                        hook.Patch(true);
+                        ExplorerCore.Log($"Re-enabled hook since you disconnected: {hook.signature}");
                    }
                }
            }
