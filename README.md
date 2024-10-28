@@ -6,11 +6,39 @@
   🔍 An in-game UI for exploring, debugging and modifying Unity games.
 </p>
 <p align="center">
-  ✨ Powered by <a href="https://github.com/yukieiji/UniverseLib">UniverseLib</a>
+  ✔️ Supports most Unity versions from 5.2 to 2021+ (IL2CPP and Mono).
+</p>
+<p align="center">
+  ✨ Powered by <a href="https://github.com/yukieiji/UniverseLib">UniverseLib</a><br>
+  🛠️ This is fork of <a href="https://github.com/sinai-dev/UnityExplorer">UnityExplorer</a> maintained by yukieiji<br>
 </p>
 
-[![Latest Version](https://img.shields.io/thunderstore/v/LethalCompanyModding/Yukieji_UnityExplorer?style=for-the-badge&logo=thunderstore&logoColor=white)](https://thunderstore.io/c/lethal-company/p/LethalCompanyModding/Yukieji_UnityExplorer)
-[![Total Downloads](https://img.shields.io/thunderstore/dt/LethalCompanyModding/Yukieji_UnityExplorer?style=for-the-badge&logo=thunderstore&logoColor=white)](https://thunderstore.io/c/lethal-company/p/LethalCompanyModding/Yukieji_UnityExplorer)
+## Changes from original
+
+- Bug fixes due to continued development
+- Stabilize overall performance by adjusting project settings, etc.
+
+If there are any bugs or features you want, please create a [ticket](https://github.com/1A3Dev/LC-UnityExplorer/issues/new/choose)!
+
+# Releases [![](https://img.shields.io/github/downloads/1A3Dev/LC-UnityExplorer/total.svg)](../../releases)
+
+[![](https://img.shields.io/github/release/1A3Dev/LC-UnityExplorer.svg?label=version)](../../releases/latest) [![](https://img.shields.io/github/workflow/status/1A3Dev/LC-UnityExplorer/Build%20UnityExplorer)](https://github.com/1A3Dev/LC-UnityExplorer/actions) [![](https://img.shields.io/github/downloads/1A3Dev/LC-UnityExplorer/latest/total.svg)](../../releases/latest)
+
+<!-- [![Latest Version](https://img.shields.io/thunderstore/v/LethalCompanyModding/Yukieji_UnityExplorer?style=for-the-badge&logo=thunderstore&logoColor=white)](https://thunderstore.io/c/lethal-company/p/LethalCompanyModding/Yukieji_UnityExplorer)
+[![Total Downloads](https://img.shields.io/thunderstore/dt/LethalCompanyModding/Yukieji_UnityExplorer?style=for-the-badge&logo=thunderstore&logoColor=white)](https://thunderstore.io/c/lethal-company/p/LethalCompanyModding/Yukieji_UnityExplorer) -->
+
+# Common issues and solutions
+
+Although UnityExplorer should work out of the box for most Unity games, in some cases you may need to tweak the settings for it to work properly.
+
+To adjust the settings, open the config file: `BepInEx\config\com.sinai.unityexplorer.cfg`
+
+Try adjusting the following settings and see if it fixes your issues:
+
+- `Startup_Delay_Time` - increase to 5-10 seconds (or more as needed), can fix issues with UnityExplorer being destroyed or corrupted during startup.
+- `Disable_EventSystem_Override` - if input is not working properly, try setting this to `true`.
+
+If these fixes do not work, please create an issue in this repo and I'll do my best to look into it.
 
 # Features
 
@@ -91,10 +119,6 @@ The inspector is used to see detailed information on objects of any type and man
   - Can paste values onto any member in a Reflection Inspector
   - Non-parsable arguments in Method/Property Evaluators allow pasting values
   - The C# Console has helper methods `Copy(obj)` and `Paste()` for accessing the Clipboard
-
-### Settings
-
-- You can change the settings via the "Options" tab of the menu, or directly from the config file: `BepInEx\config\com.sinai.unityexplorer.cfg`
 
 ### Disclaimer
 
