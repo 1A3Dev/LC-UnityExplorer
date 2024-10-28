@@ -33,7 +33,22 @@ bld/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
-.idea/
+
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+*.iws
+.idea/httpRequests
+
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
