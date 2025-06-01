@@ -13,6 +13,7 @@
     <RootNamespace>UnityExplorer</RootNamespace>
     <!-- MSBuildの.NET8対応に伴って勝手にバージョンにハッシュ値入れられてBepInExのロード不具合が出たため、明示的に無効化しておく -->
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <Optimize>true</Optimize>
     <Configurations>BIE5_Mono</Configurations>
   </PropertyGroup>
 
@@ -34,7 +35,7 @@
     <DefineConstants>MONO,BIE,BIE5</DefineConstants>
     <AssemblyName>UnityExplorer.BIE5.Mono</AssemblyName>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='BIE5_Mono|AnyCPU'">
     <DebugType>portable</DebugType>
   </PropertyGroup>
@@ -94,7 +95,7 @@
       <HintPath>$(LethalCompanyDir)Lethal Company_Data/Managed/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  
+
   <ItemGroup Condition="$(CI) == 'true'">
       <PackageReference Include="LethalCompany.GameLibs.Steam" Version="62.0.1-ngd.0" />
   </ItemGroup>

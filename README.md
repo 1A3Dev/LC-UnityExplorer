@@ -16,9 +16,15 @@
 ## Changes from original
 
 - Bug fixes due to continued development
+- Some new featuree
 - Stabilize overall performance by adjusting project settings, etc.
 
 If there are any bugs or features you want, please create a [ticket](https://github.com/1A3Dev/LC-UnityExplorer/issues/new/choose)!
+
+### Comparison with other forks
+
+- New features while keeping high compatibility
+- stability
 
 # Releases [![](https://img.shields.io/github/downloads/1A3Dev/LC-UnityExplorer/total.svg)](../../releases)
 
@@ -37,6 +43,7 @@ Try adjusting the following settings and see if it fixes your issues:
 
 - `Startup_Delay_Time` - increase to 5-10 seconds (or more as needed), can fix issues with UnityExplorer being destroyed or corrupted during startup.
 - `Disable_EventSystem_Override` - if input is not working properly, try setting this to `true`.
+- `Disable_Setup_Force_ReLoad_ManagedAssemblies` - if Mono game fails to resolve assembly dependencies at startup, try setting this to `true`(detail : yukieiji/UniverseLib#4).
 
 If these fixes do not work, please create an issue in this repo and I'll do my best to look into it.
 
@@ -91,7 +98,10 @@ The inspector is used to see detailed information on objects of any type and man
 
 - The C# Console uses the `Mono.CSharp.Evaluator` to define temporary classes or run immediate REPL code.
 - You can execute a script automatically on startup by naming it `startup.cs` and placing it in the `sinai-dev-UnityExplorer\Scripts\` folder (this folder will be created where you placed the DLL file).
-- See the "Help" dropdown in the C# console menu for more detailed information.
+  - Also you can load/save/compile `cs` files under `sinai-dev-UnityExplorer\Scripts\` folder
+    - load : Pressing `Refresh`(renamed Reset) button and selecting dropdown your file name.
+    - save : Pressing `Compile` button and automatically saves the file with the file name selected in the dropdown
+- See the "Welcome" dropdown in the C# console menu for more detailed information.
 
 ### Hook Manager
 

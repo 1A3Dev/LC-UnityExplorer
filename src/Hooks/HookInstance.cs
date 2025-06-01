@@ -106,7 +106,7 @@ namespace UnityExplorer.Hooks
             {
                 if (ex is FormatException)
                 {
-                    string output = scriptEvaluator._textWriter.ToString();
+                    string output = scriptEvaluator.ToString();
                     string[] outputSplit = output.Split('\n');
                     if (outputSplit.Length >= 2)
                         output = outputSplit[outputSplit.Length - 2];

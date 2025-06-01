@@ -18,7 +18,10 @@ internal class TimeScaleWidget
 
     public static void SetUp(GameObject parent)
     {
-        Instance = new TimeScaleWidget(parent);
+        if (Instance == null)
+        {
+            Instance = new TimeScaleWidget(parent);
+        }
     }
 
     private TimeScaleWidget(GameObject parent)
@@ -54,8 +57,7 @@ internal class TimeScaleWidget
             UpdateTimeScale();
         }
 
-        if (timeInput != null &&
-            !timeInput.Component.isFocused)
+        if (!timeInput.Component.isFocused)
         {
             timeInput.Text = Time.timeScale.ToString("F2");
         }
@@ -70,11 +72,6 @@ internal class TimeScaleWidget
 
     public void OnPauseButtonClicked()
     {
-        if (timeInput == null)
-        {
-            return;
-        }
-
         OnTimeInputEndEdit(timeInput.Text);
 
         locked = !locked;
@@ -119,10 +116,14 @@ internal class TimeScaleWidget
 
         try
         {
-            MethodInfo? target = typeof(Time).GetProperty("timeScale")?.GetSetMethod();
+            var target = typeof(Time).GetProperty("timeScale")?.GetSetMethod();
+            if (target == null)
+            {
+                return;
+            }
 #if CPP
-            if (target == null ||
-                IL2CPPUtils.GetIl2CppMethodInfoPointerFieldForGeneratedMethod(target) == null)
+            var fieldInfo = IL2CPPUtils.GetIl2CppMethodInfoPointerFieldForGeneratedMethod(target);
+            if (fieldInfo == null)
             {
                 return;
             }
